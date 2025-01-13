@@ -1,7 +1,7 @@
 # Identity Provider
 Creates identity store and UI app client.
 
-<img src="https://github.com/user-attachments/assets/d899d8ae-c57e-4f12-a1a4-5c3707285704" width="50%">
+<img src="architecture.png" width="50%">
 
 \* Diagram generated using https://github.com/pistazie/cdk-dia
 
