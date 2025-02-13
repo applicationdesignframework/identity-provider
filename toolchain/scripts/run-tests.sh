@@ -12,16 +12,16 @@ bandit --recursive "${targets[@]}"
 black --check --diff "${targets[@]}"
 
 # Style guide enforcement (https://flake8.pycqa.org)
-flake8 --config .flake8 "${targets[@]}"
+flake8 --config toolchain/.flake8 "${targets[@]}"
 
 # Sort imports (https://pycqa.github.io/isort)
-isort --settings-path .isort.cfg --check --diff "${targets[@]}"
+isort --src . --settings-path toolchain/.isort.cfg --check --diff "${targets[@]}"
 
 # Static type checker (https://mypy.readthedocs.io)
-mypy --config-file .mypy.ini "${targets[@]}"
+mypy --config-file toolchain/.mypy.ini "${targets[@]}"
 
 # Check for errors, enforce a coding standard, look for code smells (http://pylint.pycqa.org)
-pylint --rcfile .pylintrc "${targets[@]}"
+pylint --rcfile toolchain/.pylintrc "${targets[@]}"
 
 # Check dependencies for security issues (https://pyup.io/safety)
 safety check -r requirements.txt -r requirements-dev.txt

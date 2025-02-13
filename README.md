@@ -5,16 +5,13 @@ Creates identity store and UI app client.
 
 \* Diagram generated using https://github.com/pistazie/cdk-dia
 
-## Create development environment
-See [Getting Started With the AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) for additional details and prerequisites.
-
-### Clone the code
+## Clone code
 ```bash
 git clone https://github.com/applicationdesignframework/identity-provider
 cd identity-provider
 ```
 
-### Create Python virtual environment and install the dependencies
+## Configure development environment
 ```bash
 python3.9 -m venv .venv
 source .venv/bin/activate
@@ -25,31 +22,42 @@ source .venv/bin/activate
 pip install pip-tools==6.4.0
 pip install pip==21.3.1
 
-./toolchain/install-deps.sh
-./toolchain/run-tests.sh
+toolchain/scripts/install-deps.sh
+toolchain/scripts/run-tests.sh
 ```
 
-### [Optional] Upgrade AWS CDK CLI version
+## [Optional] Upgrade AWS CDK CLI version
+The application uses Node Package Manager (npm) and `package.json` configuration file to install AWS CDK CLI locally. To find the latest AWS CDK CLI version: `npm view aws-cdk-lib version`.
+
 ```bash
 vi package.json  # Upgrade the "aws-cdk" package version
-./toolchain/install-deps.sh
-./toolchain/run-tests.sh
 ```
 
-### [Optional] Upgrade dependencies (ordered by constraints)
+```bash
+toolchain/scripts/install-deps.sh
+toolchain/scripts/run-tests.sh
+```
+
+## [Optional] Upgrade dependencies (ordered by constraints)
 
 Consider [AWS CDK CLI](https://docs.aws.amazon.com/cdk/v2/guide/versioning.html#cdk_toolkit_versioning) compatibility when upgrading AWS CDK library version.
 
 ```bash
 pip-compile --upgrade requirements.in
 pip-compile --upgrade requirements-dev.in
-./toolchain/install-deps.sh
-# [Optional] Cleanup unused packages
-pip-sync requirements.txt requirements-dev.txt
-./toolchain/run-tests.sh
 ```
 
-## Deploy the service to sandbox environment
+```bash
+toolchain/scripts/install-deps.sh
+toolchain/scripts/run-tests.sh
+```
+
+## [Optional] Cleanup unused packages
+```bash
+pip-sync requirements.txt requirements-dev.txt
+```
+
+## Deploy service stack
 The `IdentityProvider-Service-Sandbox` stack uses your default AWS account and Region.
 
 ```bash
@@ -65,7 +73,7 @@ IdentityProvider-Service-Sandbox.CognitoUserPoolID = eu-west-1_W2c...
 IdentityProvider-Service-Sandbox.UIAppSignInURL = https://111111111111-example.auth.eu-west-1.amazoncognito.com/login?client_id=5r2jp...&response_type=token&redirect_uri=https://ui.eu-west-1.111111111111.product.example.com
 ```
 
-## Test the service
+## Test service
 
 ### Create a test user
 The identity provider requires `custom:tenant_id` and `custom:role` attributes.
@@ -135,7 +143,7 @@ aws cognito-idp admin-delete-user \
   --username ${_user_email}
 ```
 
-## Delete the service
+## Delete service stack
 **Do not forget to delete the stack to avoid unexpected charges**
 ```bash
 npx cdk destroy IdentityProvider-Service-Sandbox
